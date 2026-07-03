@@ -15,7 +15,7 @@ I built AgreeMind to solve this. It's a full-stack dashboard that parses contrac
 - **Automated Extraction:** Instantly pulls out key clauses, risk levels, and 3-sentence executive summaries based on the text.
 - **Deadline Aggregator:** Finds critical renewal and payment dates and pins them to an interactive alert panel.
 - **Contextual 'Ask AI' Chat:** Click 'Ask AI' on any contract to open a chat tied specifically to that document's text for nuanced legal advice.
-- **Agentic System Manager:** A global chat assistant that can actually execute database updates in Supabase through natural language commands (e.g., "Change document #2 category to NDA").
+- **Agentic System Manager:** A global chat assistant that can actually execute database updates in Supabase through natural language commands.
 
 ![Upload and Analysis View](./assets/upload.png)
 
@@ -31,9 +31,21 @@ You will need Node.js and Ollama installed.
 
 First, pull the model:
 `ollama pull llama3.2`
-
+![Document-Specific AI Advisor](./assets/docxspecificchat.png)
+![Agentic System AI in Action](./assets/globalchat.png)
 Then start the backend:
 ```bash
 cd server
 npm install
 node index.js
+Start the frontend in a new terminal:
+
+Bash
+cd client
+npm install
+npm run dev
+Hackathon Notes & struggles
+
+The hardest technical challenge of this build was getting the agentic global chat to function correctly. I had to configure the prompt to output specific JSON commands that the backend would intercept and use to modify Supabase, rather than just returning conversational text.
+
+Getting a local LLM to output strictly formatted JSON that didn't include markdown garbage (```json blocks) which would crash the React frontend was also a major boss fight. I spent hours building robust regex sanitizers on the Node backend to fix the AI's output before it was stored. It was a massive headache, but seeing it all connect and work persistently in Supabase was worth it.
